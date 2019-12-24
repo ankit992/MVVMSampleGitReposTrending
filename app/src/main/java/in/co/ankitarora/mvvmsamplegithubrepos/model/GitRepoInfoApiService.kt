@@ -1,19 +1,18 @@
 package `in`.co.ankitarora.mvvmsamplegithubrepos.model
 
+import `in`.co.ankitarora.mvvmsamplegithubrepos.di.DaggerApiComponent
 import io.reactivex.Single
-import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
 class GitRepoInfoApiService {
-    private val BASE_URL = "https://github-trending-api.now.sh/"
-    private val api = Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
-        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-        .build().create(GitRepoInfoApi::class.java)
+    @Inject
+    lateinit var api: GitRepoInfoApi
 
-    fun getGitRepoInfoList(): Single<List<GitRepoInfo>>{
+    init {
+        DaggerApiComponent.create().inject(this)
+    }
+
+    fun getGitRepoInfoList(): Single<List<GitRepoInfo>> {
         return api.getListOfTrendingGitRepos()
     }
 }

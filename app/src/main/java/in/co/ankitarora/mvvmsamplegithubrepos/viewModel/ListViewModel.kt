@@ -1,5 +1,6 @@
 package `in`.co.ankitarora.mvvmsamplegithubrepos.viewModel
 
+import `in`.co.ankitarora.mvvmsamplegithubrepos.di.DaggerViewModelComponent
 import `in`.co.ankitarora.mvvmsamplegithubrepos.model.GitRepoInfo
 import `in`.co.ankitarora.mvvmsamplegithubrepos.model.GitRepoInfoApiService
 import androidx.lifecycle.MutableLiveData
@@ -8,6 +9,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class ListViewModel : ViewModel() {
 
@@ -16,10 +18,16 @@ class ListViewModel : ViewModel() {
     val loading by lazy { MutableLiveData<Boolean>() }
 
     private val disposable = CompositeDisposable()
-    private val api = GitRepoInfoApiService()
+
+    @Inject
+    lateinit var api: GitRepoInfoApiService
 
     fun refresh() {
         getRepoInfoList()
+    }
+
+    init {
+        DaggerViewModelComponent.create().inject(this)
     }
 
     private fun getRepoInfoList() {
