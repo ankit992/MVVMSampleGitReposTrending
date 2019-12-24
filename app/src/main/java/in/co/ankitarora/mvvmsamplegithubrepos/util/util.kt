@@ -3,6 +3,7 @@ package `in`.co.ankitarora.mvvmsamplegithubrepos.util
 import `in`.co.ankitarora.mvvmsamplegithubrepos.R
 import android.content.Context
 import android.widget.ImageView
+import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -15,7 +16,7 @@ fun getProgressDrawable(context: Context): CircularProgressDrawable {
     }
 }
 
-fun ImageView.loadImage(uri : String?, progressDrawable: CircularProgressDrawable){
+fun ImageView.loadImage(uri: String?, progressDrawable: CircularProgressDrawable) {
     val options = RequestOptions()
         .placeholder(progressDrawable)
         .error(R.mipmap.ic_launcher_round)
@@ -23,4 +24,9 @@ fun ImageView.loadImage(uri : String?, progressDrawable: CircularProgressDrawabl
         .setDefaultRequestOptions(options)
         .load(uri)
         .into(this)
+}
+
+@BindingAdapter("android:imageUrl")
+fun loadImage(view: ImageView, url: String?) {
+    view.loadImage(url, getProgressDrawable(view.context))
 }
