@@ -11,12 +11,16 @@ import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class ListViewModel : ViewModel() {
+class ListViewModel() : ViewModel() {
 
+    constructor(gitRepoInfoApiService: GitRepoInfoApiService) : this() {
+        injected = true
+    }
+
+    private var injected = false;
     val gitRepoInfoList by lazy { MutableLiveData<List<GitRepoInfo>>() }
     val loadError by lazy { MutableLiveData<Boolean>() }
     val loading by lazy { MutableLiveData<Boolean>() }
-
     private val disposable = CompositeDisposable()
 
     @Inject
@@ -27,7 +31,8 @@ class ListViewModel : ViewModel() {
     }
 
     init {
-        DaggerViewModelComponent.create().inject(this)
+        if (!injected)
+            DaggerViewModelComponent.create().inject(this)
     }
 
     private fun getRepoInfoList() {

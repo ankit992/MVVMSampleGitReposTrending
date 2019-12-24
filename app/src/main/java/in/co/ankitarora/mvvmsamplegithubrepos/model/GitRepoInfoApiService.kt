@@ -13,6 +13,7 @@ class GitRepoInfoApiService {
     }
 
     fun getGitRepoInfoList(): Single<List<GitRepoInfo>> {
+
         return api.getListOfTrendingGitRepos()
     }
 }
