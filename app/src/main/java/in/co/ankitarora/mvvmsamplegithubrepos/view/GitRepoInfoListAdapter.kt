@@ -1,6 +1,7 @@
 package `in`.co.ankitarora.mvvmsamplegithubrepos.view
 
 import `in`.co.ankitarora.mvvmsamplegithubrepos.R
+import `in`.co.ankitarora.mvvmsamplegithubrepos.databinding.ItemGitRepoBinding
 import `in`.co.ankitarora.mvvmsamplegithubrepos.model.GitRepoInfo
 import `in`.co.ankitarora.mvvmsamplegithubrepos.util.getProgressDrawable
 import `in`.co.ankitarora.mvvmsamplegithubrepos.util.loadImage
@@ -8,12 +9,13 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_git_repo.view.*
 
 class GitRepoInfoListAdapter(private val gitRepoInfoList: ArrayList<GitRepoInfo>) :
-    RecyclerView.Adapter<GitRepoInfoListAdapter.GitRepoInfoListHolder>() {
+    RecyclerView.Adapter<GitRepoInfoListAdapter.GitRepoInfoListHolder>(), GitRepoItemClickListener {
 
     fun updateGitRepoList(newGitRepoList: List<GitRepoInfo>) {
         gitRepoInfoList.clear()
@@ -21,11 +23,17 @@ class GitRepoInfoListAdapter(private val gitRepoInfoList: ArrayList<GitRepoInfo>
         notifyDataSetChanged()
     }
 
-    class GitRepoInfoListHolder(var view: View) : RecyclerView.ViewHolder(view)
+    class GitRepoInfoListHolder(var view: ItemGitRepoBinding) : RecyclerView.ViewHolder(view.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): GitRepoInfoListHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.item_git_repo, parent, false)
+        val view =
+            DataBindingUtil.inflate<ItemGitRepoBinding>(
+                inflater,
+                R.layout.item_git_repo,
+                parent,
+                false
+            )
         return GitRepoInfoListHolder(view)
     }
 
@@ -33,19 +41,15 @@ class GitRepoInfoListAdapter(private val gitRepoInfoList: ArrayList<GitRepoInfo>
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: GitRepoInfoListHolder, position: Int) {
-        holder.view.userName.text =
-            "by ${gitRepoInfoList[position].username ?: "username not found"}"
-        holder.view.repositoryName.text =
-            gitRepoInfoList[position].repoInfo?.name ?: "RepoName not found"
-        holder.view.avatarImage.loadImage(
-            gitRepoInfoList[position].avatarUrl,
-            getProgressDrawable(holder.view.context)
-        )
-        holder.view.itemGitRepoInfoLayout.setOnClickListener {
-            val action = ListFragmentDirections.actionDetail(gitRepoInfoList[position])
-            Navigation.findNavController(holder.view).navigate(action)
-        }
+        holder.view.gitRepoInfo = gitRepoInfoList[position]
+        holder.view.listener = this
+    }
 
+    override fun onClick(v: View) {
+        gitRepoInfoList.find { gitRepoInfo -> gitRepoInfo.repoInfo?.url == v.tag }?.apply {
+            val action = ListFragmentDirections.actionDetail(this)
+            Navigation.findNavController(v).navigate(action)
+        }
     }
 
 }
