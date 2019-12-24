@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MVVM Sample Github Repos</string>
+    <string name="image_of_git_user">Image of git user</string>
+    <string name="error_load_data">An error occured while loading data</string>
 </resources>

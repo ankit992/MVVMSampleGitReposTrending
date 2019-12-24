@@ -1,69 +1,55 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <LinearLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         tools:context=".view.DetailFragment">
-
         <ImageView
             android:id="@+id/userImage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="200dp"
-            android:scaleType="center" />
-
+            android:scaleType="center"
+            android:contentDescription="@string/image_of_git_user" />
         <TextView
             android:id="@+id/gitRepoName"
             style="@style/Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:text="GitRepoName" />
-
+            android:layout_margin="4dp" />
         <TextView
         android:id="@+id/userName"
         style="@style/Text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="4dp"
-        android:text="username" />
-
+        android:layout_margin="4dp" />
         <TextView
             android:id="@+id/userUrl"
             style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:text="username" />
+            android:layout_margin="4dp" />
         <TextView
             android:id="@+id/name"
             style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:text="name" />
-
+            android:layout_margin="4dp" />
         <TextView
             android:id="@+id/gitRepoUrl"
             style="@style/Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:text="repoUrl" />
-
+            android:layout_margin="4dp" />
         <TextView
             android:id="@+id/gitRepoDescription"
             style="@style/Text"
             android:textAlignment="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:text="repoDescription" />
-
-
+            android:layout_margin="4dp" />
     </LinearLayout>
 </ScrollView>
