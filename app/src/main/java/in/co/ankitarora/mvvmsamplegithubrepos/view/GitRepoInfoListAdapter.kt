@@ -8,6 +8,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.item_git_repo.view.*
 
@@ -32,13 +33,19 @@ class GitRepoInfoListAdapter(private val gitRepoInfoList: ArrayList<GitRepoInfo>
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: GitRepoInfoListHolder, position: Int) {
-        holder.view.userName.text = "by ${gitRepoInfoList[position].username ?: "username not found"}"
+        holder.view.userName.text =
+            "by ${gitRepoInfoList[position].username ?: "username not found"}"
         holder.view.repositoryName.text =
             gitRepoInfoList[position].repoInfo?.name ?: "RepoName not found"
         holder.view.avatarImage.loadImage(
             gitRepoInfoList[position].avatarUrl,
             getProgressDrawable(holder.view.context)
         )
+        holder.view.itemGitRepoInfoLayout.setOnClickListener {
+            val action = ListFragmentDirections.actionDetail(gitRepoInfoList[position])
+            Navigation.findNavController(holder.view).navigate(action)
+        }
+
     }
 
 }
