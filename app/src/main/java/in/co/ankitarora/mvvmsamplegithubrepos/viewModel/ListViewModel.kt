@@ -1,19 +1,22 @@
 package `in`.co.ankitarora.mvvmsamplegithubrepos.viewModel
 
+import `in`.co.ankitarora.mvvmsamplegithubrepos.di.AppModule
 import `in`.co.ankitarora.mvvmsamplegithubrepos.di.DaggerViewModelComponent
 import `in`.co.ankitarora.mvvmsamplegithubrepos.model.GitRepoInfo
-import `in`.co.ankitarora.mvvmsamplegithubrepos.model.GitRepoInfoApiService
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class ListViewModel() : ViewModel() {
+class ListViewModel(app: Application) : AndroidViewModel(app) {
 
-    constructor(gitRepoInfoApiService: GitRepoInfoApiService) : this() {
+    constructor(app: Application, test: Boolean) : this(app) {
         injected = true
     }
 
@@ -24,7 +27,7 @@ class ListViewModel() : ViewModel() {
     private val disposable = CompositeDisposable()
 
     @Inject
-    lateinit var api: GitRepoInfoApiService
+    lateinit var api: Single<List<GitRepoInfo>>
 
     fun refresh() {
         getRepoInfoList()
@@ -32,12 +35,12 @@ class ListViewModel() : ViewModel() {
 
     init {
         if (!injected)
-            DaggerViewModelComponent.create().inject(this)
+            DaggerViewModelComponent.builder().appModule(AppModule(getApplication())).build().inject(this)
     }
 
     private fun getRepoInfoList() {
         disposable.add(
-            api.getGitRepoInfoList()
+            api
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeWith(object : DisposableSingleObserver<List<GitRepoInfo>>() {
