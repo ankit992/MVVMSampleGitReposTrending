@@ -7,6 +7,6 @@ import okhttp3.OkHttpClient
 object IdlingResources {
     fun registerOkHttp(client: OkHttpClient) {
         if (BuildConfig.BUILD_TYPE == "qa")
-            IdlingRegistry.getInstance().register(OkHttp3IdlingResource.create("okhttp", client));
+            IdlingRegistry.getInstance().register(OkHttp3IdlingResource.create("okhttp", client))
     }
 }

@@ -19,17 +19,21 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "in.co.ankitarora.templatechooser.test.CucumberTestRunner"
+        testInstrumentationRunner "in.co.ankitarora.mvvmsamplegithubrepos.test.CucumberTestRunner"
 
     }
     buildTypes {
+        debug{
+            buildConfigField "String", "BASE_URL", '"https://github-trending-api.now.sh/"'
+        }
         release {
+            buildConfigField "String", "BASE_URL", '"https://github-trending-api.now.sh/"'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         qa {
             initWith debug
-            versionNameSuffix "-qa"
+            buildConfigField "String", "BASE_URL", '"http://localhost:8080/"'
         }
     }
 
@@ -89,6 +93,8 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
+    implementation "androidx.test.espresso.idling:idling-net:3.2.0"
+
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
@@ -101,7 +107,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation "androidx.test:rules:1.2.0"
-    implementation "androidx.test.espresso.idling:idling-net:3.2.0"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.2.1"
+
     androidTestImplementation "info.cukes:cucumber-android:$cucumberAndroidVersion"
     androidTestImplementation "info.cukes:cucumber-picocontainer:$cucumberPicoContainerVersion"
     androidTestImplementation "info.cukes:cucumber-jvm-deps:$cucumberJvmDepsVersion"

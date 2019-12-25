@@ -1,6 +1,7 @@
 package `in`.co.ankitarora.mvvmsamplegithubrepos.di
 
 import `in`.co.ankitarora.mvvmsamplegithubrepos.App
+import `in`.co.ankitarora.mvvmsamplegithubrepos.BuildConfig
 import `in`.co.ankitarora.mvvmsamplegithubrepos.IdlingResources
 import `in`.co.ankitarora.mvvmsamplegithubrepos.model.GitRepoInfo
 import `in`.co.ankitarora.mvvmsamplegithubrepos.model.GitRepoInfoApi
@@ -22,13 +23,12 @@ import javax.inject.Singleton
 
 @Module
 open class ApiModule {
-    private val BASE_URL = "https://github-trending-api.now.sh/"
 
     @Singleton
     @Provides
     open fun provideGitRepoInfoListApiService(app: App): Single<List<GitRepoInfo>> {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .client(getOkHttpClient(app))
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
