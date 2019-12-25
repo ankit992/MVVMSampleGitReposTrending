@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="in.co.ankitarora.mvvmsamplegithubrepos.view.ListFragment"
-        android:label="list_fragment"
-        tools:layout="@layout/list_fragment" >
+        android:label="Git Trending Repo List"
+        tools:layout="@layout/list_fragment">
         <action
             android:id="@+id/actionDetail"
             app:destination="@id/detailFragment" />
@@ -17,8 +17,8 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="in.co.ankitarora.mvvmsamplegithubrepos.view.DetailFragment"
-        android:label="detail_fragment"
-        tools:layout="@layout/detail_fragment" >
+        android:label="Git Repo Details"
+        tools:layout="@layout/detail_fragment">
         <action
             android:id="@+id/actionList"
             app:destination="@id/listFragment" />

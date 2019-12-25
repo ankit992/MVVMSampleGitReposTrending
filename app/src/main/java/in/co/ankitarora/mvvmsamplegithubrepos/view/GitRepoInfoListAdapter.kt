@@ -3,8 +3,6 @@ package `in`.co.ankitarora.mvvmsamplegithubrepos.view
 import `in`.co.ankitarora.mvvmsamplegithubrepos.R
 import `in`.co.ankitarora.mvvmsamplegithubrepos.databinding.ItemGitRepoBinding
 import `in`.co.ankitarora.mvvmsamplegithubrepos.model.GitRepoInfo
-import `in`.co.ankitarora.mvvmsamplegithubrepos.util.getProgressDrawable
-import `in`.co.ankitarora.mvvmsamplegithubrepos.util.loadImage
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
@@ -12,7 +10,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.item_git_repo.view.*
 
 class GitRepoInfoListAdapter(private val gitRepoInfoList: ArrayList<GitRepoInfo>) :
     RecyclerView.Adapter<GitRepoInfoListAdapter.GitRepoInfoListHolder>(), GitRepoItemClickListener {
