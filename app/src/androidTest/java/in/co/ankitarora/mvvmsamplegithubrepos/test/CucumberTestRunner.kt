@@ -1,9 +1,11 @@
 package `in`.co.ankitarora.mvvmsamplegithubrepos.test
 
+import `in`.co.ankitarora.mvvmsamplegithubrepos.helper.configureMockServer
 import android.os.Bundle
 import androidx.test.runner.AndroidJUnitRunner
 import cucumber.api.CucumberOptions
 import cucumber.api.android.CucumberInstrumentationCore
+import okhttp3.mockwebserver.MockWebServer
 
 
 @CucumberOptions(
@@ -16,9 +18,11 @@ import cucumber.api.android.CucumberInstrumentationCore
 class CucumberTestRunner() : AndroidJUnitRunner() {
 
     private val instrumentationCore = CucumberInstrumentationCore(this)
-
+    lateinit var mockWebServer: MockWebServer
     override fun onCreate(bundle: Bundle) {
         super.onCreate(bundle)
+        mockWebServer = MockWebServer()
+        configureMockServer(mockWebServer)
 //        IdlingRegistry.getInstance().register(UriIdlingResourceSingleton.uriIdlingResource)
         instrumentationCore.create(bundle)
     }
@@ -30,6 +34,7 @@ class CucumberTestRunner() : AndroidJUnitRunner() {
 
     override fun onDestroy() {
         super.onDestroy()
+        mockWebServer.close()
 //        IdlingRegistry.getInstance().unregister(UriIdlingResourceSingleton.uriIdlingResource)
     }
 

@@ -107,7 +107,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation "androidx.test:rules:1.2.0"
-    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.2.1"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:3.8.0"
 
     androidTestImplementation "info.cukes:cucumber-android:$cucumberAndroidVersion"
     androidTestImplementation "info.cukes:cucumber-picocontainer:$cucumberPicoContainerVersion"
