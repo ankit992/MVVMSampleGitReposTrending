@@ -4,7 +4,6 @@ import `in`.co.ankitarora.mvvmsamplegithubrepos.R
 import `in`.co.ankitarora.mvvmsamplegithubrepos.helper.RecyclerViewItemCountAssertion
 import `in`.co.ankitarora.mvvmsamplegithubrepos.helper.nthChildOf
 import androidx.test.espresso.Espresso
-import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
 import androidx.test.espresso.matcher.ViewMatchers
@@ -22,7 +21,7 @@ class ListRepoTestScreen {
     }
 
     fun clickItemNumber(itemNumber: Int) {
-        Espresso.onView(nthChildOf(withId(R.id.gitRepoList), itemNumber - 1))
+        Espresso.onView(nthChildOf(withId(R.id.gitRepoList), itemNumber))
             .perform(ViewActions.click())
     }
 

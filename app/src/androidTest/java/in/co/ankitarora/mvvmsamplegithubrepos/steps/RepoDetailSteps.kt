@@ -14,8 +14,8 @@ class RepoDetailSteps(private val repoDetailTestScreen: RepoDetailTestScreen) {
         repoDetailTestScreen.validateScreenIsLoaded()
     }
 
-    @Then("I should see the RepoName3 on screen")
+    @Then("I should see the RepoName1 on screen")
     fun i_should_see_3rd_repo_name_on_screen(){
-        repoDetailTestScreen.validateRepoNameShown("reponame3")
+        repoDetailTestScreen.validateRepoNameShown("reponame1")
     }
 }

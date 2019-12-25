@@ -27,9 +27,9 @@ class ListRepoSteps(private val listRepoScreen: ListRepoTestScreen){
         listRepoScreen.validate(4)
     }
 
-    @When("I click on 3rd Item in List")
+    @When("I click on 1st Item in List")
     fun i_click_on_3rd_item_in_list(){
-        listRepoScreen.clickItemNumber(3)
+        listRepoScreen.clickItemNumber(0)
     }
 
 

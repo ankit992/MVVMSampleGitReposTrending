@@ -6,19 +6,21 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.TypeSafeMatcher
 
-
-fun nthChildOf(parentMatcher: Matcher<View>, childPosition: Int): Matcher<View> {
+fun nthChildOf(
+    parentMatcher: Matcher<View?>,
+    childPosition: Int
+): Matcher<View?>? {
     return object : TypeSafeMatcher<View>() {
         override fun describeTo(description: Description) {
-            description.appendText("with $childPosition child view of type parentMatcher")
+            description.appendText("position $childPosition of parent ")
+            parentMatcher.describeTo(description)
         }
 
         override fun matchesSafely(view: View): Boolean {
-            if (view.parent !is ViewGroup) {
-                return parentMatcher.matches(view.parent)
-            }
-            val group = view.parent as ViewGroup
-            return parentMatcher.matches(view.parent) && group.getChildAt(childPosition) == view
+            if (view.parent !is ViewGroup) return false
+            val parent = view.parent as ViewGroup
+            return (parentMatcher.matches(parent)
+                    && parent.childCount > childPosition && parent.getChildAt(childPosition) == view)
         }
     }
 }
