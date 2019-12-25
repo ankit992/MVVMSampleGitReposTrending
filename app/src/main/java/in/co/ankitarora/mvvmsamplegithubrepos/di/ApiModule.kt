@@ -1,6 +1,7 @@
 package `in`.co.ankitarora.mvvmsamplegithubrepos.di
 
 import `in`.co.ankitarora.mvvmsamplegithubrepos.App
+import `in`.co.ankitarora.mvvmsamplegithubrepos.IdlingResources
 import `in`.co.ankitarora.mvvmsamplegithubrepos.model.GitRepoInfo
 import `in`.co.ankitarora.mvvmsamplegithubrepos.model.GitRepoInfoApi
 import android.app.Application
@@ -55,7 +56,10 @@ open class ApiModule {
         val cacheSize = 10 * 1024 * 1024 // 10 MiB
 
         val cache = Cache(httpCacheDirectory, cacheSize.toLong())
-        return OkHttpClient.Builder().addNetworkInterceptor(cacheInterceptor).cache(cache).build()
+        val okHttpClient =
+            OkHttpClient.Builder().addNetworkInterceptor(cacheInterceptor).cache(cache).build()
+        IdlingResources.registerOkHttp(okHttpClient)
+        return okHttpClient
     }
 
     private fun isNetworkAvailable(app: Application): Boolean {

@@ -8,7 +8,10 @@ apply plugin: 'kotlin-kapt'
 
 apply plugin: 'androidx.navigation.safeargs'
 
+
 android {
+    testBuildType "qa"
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "in.co.ankitarora.mvvmsamplegithubrepos"
@@ -16,15 +19,31 @@ android {
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "in.co.ankitarora.templatechooser.test.CucumberTestRunner"
+
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        qa {
+            initWith debug
+            versionNameSuffix "-qa"
+        }
     }
 
+    sourceSets {
+        main.java.srcDirs += 'src/main/java'
+        test.java.srcDirs += 'src/test/java'
+    }
+
+    testOptions {
+        unitTests {
+            returnDefaultValues = true
+            includeAndroidResources = true
+        }
+    }
     dataBinding.enabled = true
 }
 
@@ -36,6 +55,9 @@ def rxJavaVersion = '2.1.1'
 def navVersion = '2.2.0-rc04'
 def daggerVersion = '2.14.1'
 def mockitoVersion = '2.11.0'
+def cucumberAndroidVersion = '1.2.5'
+def cucumberPicoContainerVersion = '1.2.5'
+def cucumberJvmDepsVersion = '1.0.5'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -65,8 +87,8 @@ dependencies {
     implementation "com.google.dagger:dagger:$daggerVersion"
     implementation "com.google.dagger:dagger-android-support:$daggerVersion"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.1.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0'
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
     kapt "com.google.dagger:dagger-android-processor:$daggerVersion"
 
@@ -75,6 +97,31 @@ dependencies {
     kaptTest "com.google.dagger:dagger-compiler:$daggerVersion"
 
     testImplementation 'junit:junit:4.12'
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    androidTestImplementation "androidx.test:rules:1.2.0"
+    implementation "androidx.test.espresso.idling:idling-net:3.2.0"
+    androidTestImplementation "info.cukes:cucumber-android:$cucumberAndroidVersion"
+    androidTestImplementation "info.cukes:cucumber-picocontainer:$cucumberPicoContainerVersion"
+    androidTestImplementation "info.cukes:cucumber-jvm-deps:$cucumberJvmDepsVersion"
+
+    implementation "androidx.test.espresso.idling:idling-concurrent:3.2.0"
+    implementation('com.jakewharton.espresso:okhttp3-idling-resource:1.0.0') {
+        exclude module: 'support-annotations'
+    }
 }
+
+gradle.taskGraph.afterTask { task, state ->
+    if ((task == connectedAndroidTest) || (task == connectedQaAndroidTest) || (task == connectedCheck)) {
+        def reportDir = new File(project.buildDir, "cucumber-reports")
+        if (!reportDir.exists()) {
+            reportDir.mkdirs()
+        }
+        println 'Retrieving Cucumber test report to ' + project.buildDir
+        def processBuilder = new ProcessBuilder(
+                ['adb', 'pull', "/mnt/sdcard/cucumber-reports/", reportDir.getAbsolutePath()])
+        processBuilder.start()
+    }
+}
+
