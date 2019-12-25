@@ -26,7 +26,7 @@ fun configureMockServer(mockWebServer: MockWebServer) {
                         "type",
                         "userUrl",
                         null,
-                        RepoInfo("reponame", "desc", "dummyRepoUrl")
+                        RepoInfo("reponame1", "desc", "dummyRepoUrl")
                     ),
                     GitRepoInfo(
                         "username2",
@@ -34,7 +34,7 @@ fun configureMockServer(mockWebServer: MockWebServer) {
                         "type",
                         "userUrl",
                         null,
-                        RepoInfo("reponame", "desc", "dummyRepoUrl")
+                        RepoInfo("reponame2", "desc", "dummyRepoUrl")
                     ),
                     GitRepoInfo(
                         "username3",
@@ -42,7 +42,7 @@ fun configureMockServer(mockWebServer: MockWebServer) {
                         "type",
                         "userUrl",
                         null,
-                        RepoInfo("reponame", "desc", "dummyRepoUrl")
+                        RepoInfo("reponame3", "desc", "dummyRepoUrl")
                     ),
                     GitRepoInfo(
                         "username4",
@@ -50,7 +50,7 @@ fun configureMockServer(mockWebServer: MockWebServer) {
                         "type",
                         "userUrl",
                         null,
-                        RepoInfo("reponame", "desc", "dummyRepoUrl")
+                        RepoInfo("reponame4", "desc", "dummyRepoUrl")
                     )
                 )
             )

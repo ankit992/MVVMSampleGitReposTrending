@@ -23,7 +23,6 @@ class CucumberTestRunner() : AndroidJUnitRunner() {
         super.onCreate(bundle)
         mockWebServer = MockWebServer()
         configureMockServer(mockWebServer)
-//        IdlingRegistry.getInstance().register(UriIdlingResourceSingleton.uriIdlingResource)
         instrumentationCore.create(bundle)
     }
 
@@ -34,8 +33,7 @@ class CucumberTestRunner() : AndroidJUnitRunner() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mockWebServer.close()
-//        IdlingRegistry.getInstance().unregister(UriIdlingResourceSingleton.uriIdlingResource)
+        mockWebServer.shutdown()
     }
 
 }

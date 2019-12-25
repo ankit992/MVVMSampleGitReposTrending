@@ -12,6 +12,7 @@
 
         <LinearLayout xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
+            android:id="@+id/repo_detail_layout"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"

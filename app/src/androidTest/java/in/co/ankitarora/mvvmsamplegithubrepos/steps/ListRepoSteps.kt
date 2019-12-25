@@ -4,6 +4,7 @@ import `in`.co.ankitarora.mvvmsamplegithubrepos.screens.ListRepoTestScreen
 import androidx.test.internal.runner.junit4.AndroidJUnit4ClassRunner
 import cucumber.api.java.en.Given
 import cucumber.api.java.en.Then
+import cucumber.api.java.en.When
 import cucumber.runtime.java.StepDefAnnotation
 import org.junit.runner.RunWith
 
@@ -24,6 +25,11 @@ class ListRepoSteps(private val listRepoScreen: ListRepoTestScreen){
     @Then("The List should have 4 items in it")
     fun the_list_should_have_4_items_in_it(){
         listRepoScreen.validate(4)
+    }
+
+    @When("I click on 3rd Item in List")
+    fun i_click_on_3rd_item_in_list(){
+        listRepoScreen.clickItemNumber(3)
     }
 
 
